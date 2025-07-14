@@ -1,0 +1,243 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+.app {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #2c3e50;
+  font-weight: 300;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  animation: fadeIn 0.8s ease-out;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.forecast-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.3);
+  overflow: hidden;
+  position: relative;
+}
+
+.forecast-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  background: rgba(255, 255, 255, 1);
+}
+
+.forecast-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  opacity: 0.8;
+  transition: all 0.4s ease;
+}
+
+.forecast-card:hover::before {
+  height: 6px;
+  opacity: 1;
+}
+
+.placeholder {
+  background: linear-gradient(-45deg, #eee, #f9f9f9, #eee);
+  background-size: 400% 400%;
+  border-radius: 16px;
+  height: 180px;
+  animation: shimmer 1.5s infinite;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .forecast-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+  }
+  
+  .app {
+    padding: 15px;
+  }
+}
+
+/* Add these classes to your weather elements for additional effects */
+.weather-icon {
+  transition: all 0.3s ease;
+}
+
+.forecast-card:hover .weather-icon {
+  transform: scale(1.1);
+}
+
+.temperature {
+  font-size: 1.8rem;
+  font-weight: 300;
+  transition: all 0.3s ease;
+}
+
+.forecast-card:hover .temperature {
+  color: #2980b9;
+}
+
+.day {
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.search-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto 30px;
+  animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.search-bar input {
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: #2c3e50;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: rgba(52, 152, 219, 0.8);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.search-bar button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #3498db, #9b59b6);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.search-bar button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #2980b9, #8e44ad);
+}
+
+.search-bar button:active {
+  transform: translateY(0);
+}
+
+.autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: none;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+  margin-top: -5px;
+  padding-top: 5px;
+  list-style: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.search-container.show-autocomplete .autocomplete {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.autocomplete li {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #2c3e50;
+}
+
+.autocomplete li:hover {
+  background: rgba(52, 152, 219, 0.1);
+  color: #2980b9;
+}
+
+.autocomplete li:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.city-name {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  font-weight: 500;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-bar button {
+    width: 100%;
+  }
+}
