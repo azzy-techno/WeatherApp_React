@@ -241,3 +241,9 @@ h1 {
     width: 100%;
   }
 }
+
+.network-info {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #555;
+}

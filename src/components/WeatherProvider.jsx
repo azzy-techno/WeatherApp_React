@@ -6,6 +6,7 @@ const WeatherProvider = ({ children }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [isSlowConnection, setIsSlowConnection] = useState(false);
+  const [connectionType, setConnectionType] = useState("");
   const [cityName, setCityName] = useState("");
 
   const fetchWeather = async (location) => {
@@ -45,6 +46,7 @@ const WeatherProvider = ({ children }) => {
     const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (conn && conn.effectiveType) {
       console.log("📶 Network Type:", conn.effectiveType);
+      setConnectionType(conn.effectiveType);
       setIsSlowConnection(conn.effectiveType.includes("2g") || conn.saveData);
     }
   }, []);
@@ -62,7 +64,7 @@ const WeatherProvider = ({ children }) => {
   }, []);
 
   return (
-    <WeatherContext.Provider value={{ weatherData, forecast, isSlowConnection, fetchWeather, cityName }}>
+    <WeatherContext.Provider value={{ weatherData, forecast, isSlowConnection, fetchWeather, cityName, connectionType }}>
       {children}
     </WeatherContext.Provider>
   );

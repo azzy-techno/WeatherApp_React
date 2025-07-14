@@ -1,12 +1,18 @@
 import React, { useState, useContext } from 'react';
 import { WeatherContext } from './WeatherProvider';
 
-const citySuggestions = ["New York", "London", "Paris", "Tokyo", "Delhi", "Bangalore", "Dubai", "Sydney", "San Francisco", "Berlin"];
+// Suggestions for dropdown autocomplete
+const citySuggestions = [
+  "New York", "London", "Paris", "Tokyo", "Delhi",
+  "Bangalore", "Dubai", "Sydney", "San Francisco", "Berlin"
+];
 
 const SearchBar = () => {
   const [city, setCity] = useState("");
   const [filteredCities, setFilteredCities] = useState([]);
-  const { fetchWeather, cityName } = useContext(WeatherContext);
+
+  // ✅ useContext must be inside the component
+  const { fetchWeather, cityName, connectionType } = useContext(WeatherContext);
 
   const handleInput = (e) => {
     const val = e.target.value;
@@ -52,6 +58,7 @@ const SearchBar = () => {
         </ul>
       )}
       {cityName && <p className="city-name">📍 Showing weather for: <strong>{cityName}</strong></p>}
+      {connectionType && <p className="network-info">📶 Network: <strong>{connectionType.toUpperCase()}</strong></p>}
     </div>
   );
 };
