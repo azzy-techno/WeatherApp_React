@@ -10,6 +10,7 @@ const ForecastCard = ({ data, slow }) => {
         if (entry.isIntersecting) {
           console.log("👀 Forecast Card Visible:", entry.target);
           setVisible(true);
+          observer.unobserve(entry.target); // Stop observing once visible
         }
       },
       { threshold: 0.2 }
@@ -18,13 +19,20 @@ const ForecastCard = ({ data, slow }) => {
     return () => observer.disconnect();
   }, []);
 
-  if (!visible) return <div ref={ref} className="forecast-card placeholder" />;
-
   return (
-    <div ref={ref} className="forecast-card">
-      <p>{new Date(data.applicable_date).toLocaleDateString()}</p>
-      <p>🌡️ {data.the_temp.toFixed(1)}°C</p>
-      {!slow && <p>💧 {data.humidity}% humidity</p>}
+    <div
+      ref={ref}
+      className={`forecast-card ${visible ? 'visible' : 'placeholder'}`}
+    >
+      {visible ? (
+        <>
+          <p className="day">{new Date(data.applicable_date).toLocaleDateString()}</p>
+          <p className="temperature">🌡️ {data.the_temp.toFixed(1)}°C</p>
+          {!slow && <p>💧 {data.humidity}% humidity</p>}
+        </>
+      ) : (
+        <p>⌛ Loading...</p>
+      )}
     </div>
   );
 };

@@ -38,6 +38,30 @@ h1 {
   border: 1px solid rgba(255,255,255,0.3);
   overflow: hidden;
   position: relative;
+  text-align: center;
+  min-height: 180px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.8s ease-out forwards;
+  margin: 20px auto;
+  max-width: 400px;
+  filter: blur(2px);
+}
+
+.forecast-grid.column-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  max-height: none;
+  overflow: visible;
+}
+
+.forecast-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
 }
 
 .forecast-card:hover {
@@ -63,13 +87,25 @@ h1 {
   opacity: 1;
 }
 
-.placeholder {
+.forecast-card.placeholder {
   background: linear-gradient(-45deg, #eee, #f9f9f9, #eee);
   background-size: 400% 400%;
   border-radius: 16px;
-  height: 180px;
   animation: shimmer 1.5s infinite;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  color: #999;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intersection-info {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 /* Animations */
@@ -246,4 +282,17 @@ h1 {
   margin-top: 4px;
   font-size: 14px;
   color: #555;
+}
+
+.scroll-indicator {
+  text-align: center;
+  font-size: 24px;
+  color: #888;
+  animation: bounce 1.5s infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }
